@@ -28,41 +28,50 @@ def main():
         exporta el resultado en varios archivos CSV.
     """
     try:
+        ensure_output_path_not_exists(LOCATION_OUTPUT_PATH)
+
         connection = connect()
         location_service = LocationService(connection)
         location_service.ensure_initialized()
-        print("> Tabla localidades creada...")
+        # print("> Tabla localidades creada...")
 
         with open(LOCATION_INPUT_PATH) as file:
-            parsed = csv.DictReader(file)
+            parsed = csv.reader(file)
+            # Saltear la fila que contiene los nombres de columnas
+            parsed.__next__() 
             location_service.insert_many(parsed)
 
-        print("> Localidades insertadas...")
-
-        ensure_output_path_not_exists(LOCATION_OUTPUT_PATH)
+        # print("> Localidades insertadas...")
 
         provinces = location_service.get_provinces()
-        print("> Listadas provincias")
+        # print("> Listadas provincias")
 
-        for province, in sorted(provinces):
+        for province, in provinces:
             # Crearemos un archivo CSV diferente para cada provincia
-            print(f"> Creando archivo para provincia: {province}")
+            # print(f"> Creando archivo para provincia: {province}")
             file_path = os.path.join(LOCATION_OUTPUT_PATH, f"{province}.csv")
-            # Obtenemos las localidades de tal provincia
-            locations = location_service.filter_by_province(province)
 
-                # La opción "w" ("write") crea el archivo si no existe.
+            # Obtenemos las localidades de tal provincia
+            locations, rows_affected = location_service.filter_by_province(province)
+
+            # La opción "w" ("write") crea el archivo si no existe.
             with open(file_path, "w") as file:
                 # Creamos un escritor para insertar los datos
                 # en forma de tupla...
                 writer = csv.writer(file)
+
+                # Escribimos el encabezado del CSV
+                writer.writerow(("id", "localidad", "provincia", "cp", "id_prov_mstr"))
+
                 location = locations.fetchone()
                 while location:
                     writer.writerow(location)
                     location = locations.fetchone()
-                # TODO: Agregar cantidad de localidades por provincia al CSV.
 
-            print(f"> Creado archivo para provincia: {province}")
+                writer.writerow(("cantidad_localidades",))
+                writer.writerow((rows_affected,))
+
+            # print(f"> Creado archivo para provincia: {province}")
 
         print("> Procedimiento finalizado sin problemas.")
     except csv.Error as err:
