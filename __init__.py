@@ -12,13 +12,6 @@ def ensure_output_path_not_exists(path: str):
     if not os.path.exists(path):
         output_path = Path(path)
         output_path.mkdir(parents=True, exist_ok=True)
-    else:
-        # Si la carpeta existe, se emite un aviso y se termina el programa.
-        print(
-            "La carpeta de datos procesados ya existe. "
-            "Por favor, elimínela si quiere repetir la inserción."
-        )
-        sys.exit(1)
 
 def main():
     """
@@ -33,7 +26,7 @@ def main():
         connection = connect()
         location_service = LocationService(connection)
         location_service.ensure_initialized()
-        # print("> Tabla localidades creada...")
+        print("> Tabla localidades creada...")
 
         with open(LOCATION_INPUT_PATH) as file:
             parsed = csv.reader(file)
@@ -41,10 +34,10 @@ def main():
             parsed.__next__() 
             location_service.insert_many(parsed)
 
-        # print("> Localidades insertadas...")
+        print("> Localidades insertadas...")
 
         provinces = location_service.get_provinces()
-        # print("> Listadas provincias")
+        print("> Listadas provincias")
 
         for province, in provinces:
             # Crearemos un archivo CSV diferente para cada provincia
@@ -71,7 +64,7 @@ def main():
                 writer.writerow(("cantidad_localidades",))
                 writer.writerow((rows_affected,))
 
-            # print(f"> Creado archivo para provincia: {province}")
+            print(f"> Creado archivo para provincia: {province}")
 
         print("> Procedimiento finalizado sin problemas.")
     except csv.Error as err:

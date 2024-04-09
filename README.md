@@ -5,7 +5,8 @@ CSV que contiene información sobre las provincias argentinas y sus respectivas 
 Posteriormente, se debe insertar esta información en una tabla de una base de datos, donde las
 columnas de la tabla coincidan con los campos del CSV. Una vez importados los datos a la base de datos, se deben realizar las siguientes actividades:
 Agrupación y Exportación por Provincia:
-- Agrupar las localidades por provincia. ● Exportar cada grupo de localidades en un archivo de CSV separado.
+- Agrupar las localidades por provincia. 
+- Exportar cada grupo de localidades en un archivo de CSV separado.
 - Cada archivo CSV debe representar una provincia y contener la lista de sus
 localidades.
 
@@ -43,3 +44,39 @@ ejecuta el script, es decir, si existe, debe ser eliminada y recreada.
 
 La presentación del trabajo práctico debe realizarse en un repositorio de GitHub, el cual debe
 ser público para su posterior revisión y evaluación.
+
+# Sobre el proyecto
+
+## Requisitos
+
+- `python3` y `pip` instalados.
+- Librería de manejo de entornos virtuales `venv`.
+
+## Pasos
+
+- Crear un entorno con `venv`.
+
+```bash
+$ venv env
+# o
+$ python3 -m venv env
+```
+- Activar entorno.
+
+```bash
+$ ./env/Scripts/activate
+# o
+$ source ./env/bin/activate
+```
+
+- Instalar dependencias.
+
+```bash
+$ pip install -r requirements.txt
+```
+
+- Ejecutar script:
+
+```bash
+$ python3 __init__.py
+```
