@@ -51,6 +51,7 @@ ser público para su posterior revisión y evaluación.
 
 - `python3` y `pip` instalados.
 - Librería de manejo de entornos virtuales `venv`.
+- Servidor de base de datos compatible con [MySQLdb](https://github.com/PyMySQL/mysqlclient).
 
 ## Pasos
 
@@ -61,6 +62,7 @@ $ venv env
 # o
 $ python3 -m venv env
 ```
+
 - Activar entorno.
 
 ```bash
@@ -73,6 +75,17 @@ $ source ./env/bin/activate
 
 ```bash
 $ pip install -r requirements.txt
+```
+- Antes de ejecutar el script, asegúrese que el servidor de base de datos está escuchando peticiones.
+
+- Puede configurar los datos usados para la conexión con las siguientes variables de entorno:
+
+```
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_NAME=
+DB_PORT=
 ```
 
 - Ejecutar script:
