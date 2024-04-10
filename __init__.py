@@ -8,7 +8,7 @@ from locations.location_service import LocationService
 LOCATION_INPUT_PATH = "data/localidades.csv"
 LOCATION_OUTPUT_PATH = "data/processed/localidades_por_provincia/"
 
-def ensure_output_path_not_exists(path: str):
+def ensure_output_path_exists(path: str):
     if not os.path.exists(path):
         output_path = Path(path)
         output_path.mkdir(parents=True, exist_ok=True)
@@ -21,7 +21,7 @@ def main():
         exporta el resultado en varios archivos CSV.
     """
     try:
-        ensure_output_path_not_exists(LOCATION_OUTPUT_PATH)
+        ensure_output_path_exists(LOCATION_OUTPUT_PATH)
 
         connection = connect()
         location_service = LocationService(connection)
@@ -68,7 +68,7 @@ def main():
 
         print("> Procedimiento finalizado sin problemas.")
     except csv.Error as err:
-        print(f"Ha ocurrido un error al leer un archivo CSV: {err}.")
+        print(f"Ha ocurrido un error al leer un archivo CSV: {err}")
     except DatabaseError as err:
         print(f"Ha ocurrido un error en una operación de la base de datos: {err}")
     finally:
