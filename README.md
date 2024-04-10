@@ -11,6 +11,7 @@ Agrupación y Exportación por Provincia:
 localidades.
 
 ## Criterios de Evaluación:
+
 - **Correcta Lectura del CSV**:
 Verificar que el programa lee correctamente el archivo CSV de las provincias argentinas con
 sus localidades. 

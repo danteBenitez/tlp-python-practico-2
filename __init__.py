@@ -28,7 +28,7 @@ def main():
         location_service.ensure_initialized()
         print("> Tabla localidades creada...")
 
-        with open(LOCATION_INPUT_PATH) as file:
+        with open(LOCATION_INPUT_PATH, encoding="utf-8") as file:
             parsed = csv.reader(file)
             # Saltear la fila que contiene los nombres de columnas
             parsed.__next__() 
@@ -41,14 +41,15 @@ def main():
 
         for province, in provinces:
             # Crearemos un archivo CSV diferente para cada provincia
-            # print(f"> Creando archivo para provincia: {province}")
+            print(f"> Creando archivo para provincia: {province}")
             file_path = os.path.join(LOCATION_OUTPUT_PATH, f"{province}.csv")
+            file_path = file_path.lower().replace(' ', '_')
 
             # Obtenemos las localidades de tal provincia
             locations, rows_affected = location_service.filter_by_province(province)
 
             # La opción "w" ("write") crea el archivo si no existe.
-            with open(file_path, "w") as file:
+            with open(file_path, "w", encoding="utf-8") as file:
                 # Creamos un escritor para insertar los datos
                 # en forma de tupla...
                 writer = csv.writer(file)
